@@ -12,6 +12,7 @@ project = signac.get_project()
 class PdfoFit:
     def __init__(
         self,
+        exe_path = '/raid6/homes/linx6/install_software/lammps_27May2021/build/lmp_mpi',
         lmp_input = '/raid6/homes/linx6/project/self_project/mxene_related/cpm_dft_mxene/lammps_input',
         result_file = None, 
         cases = None
@@ -22,6 +23,7 @@ class PdfoFit:
             lmp_input (str, optional): _description_. Defaults to '/raid6/homes/linx6/project/self_project/mxene_related/cpm_dft_mxene/lammps_input'.
             cases (_type_, optional): _description_. Defaults to None. if provided, it can calculate the sum_square per case. 
         """
+        self.exe_path = exe_path
         self.lmp_input = lmp_input
         self.result_file = result_file
         self.cases = cases
@@ -30,7 +32,7 @@ class PdfoFit:
         
     def produce_lmpcpm(self):
             #mpirun -np 1 
-        lmp_scipt = '/raid6/homes/linx6/install_software/lammps_27May2021/build/lmp_mpi -in {lmp_input} '\
+        lmp_scipt = 'mpirun -np 3 {exe_path} -in {lmp_input} '\
                     '-var mx_tcharge {mx_tcharge} -var kappa {kappa} '\
                     '-var width_H {width_H} -var Aii_H {Aii_H} '\
                     '-var width_O {width_O} -var Aii_O {Aii_O} '\
@@ -40,6 +42,7 @@ class PdfoFit:
                     '-sf intel -pk intel 0 omp 2'
                     
         subprocess.run(lmp_scipt.format(
+                                exe_path = self.exe_path,
                                 lmp_input = self.lmp_input,
                                 mx_tcharge = self.mx_tcharge, kappa=self.kappa,
                                 width_H = self.width_H, Aii_H = self.Aii_H,
