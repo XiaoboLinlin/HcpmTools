@@ -1,0 +1,8 @@
+README.md
+setup.py
+HcpmTools/__init__.py
+HcpmTools.egg-info/PKG-INFO
+HcpmTools.egg-info/SOURCES.txt
+HcpmTools.egg-info/dependency_links.txt
+HcpmTools.egg-info/not-zip-safe
+HcpmTools.egg-info/top_level.txt
