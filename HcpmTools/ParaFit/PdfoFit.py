@@ -32,7 +32,7 @@ class PdfoFit:
         
     def produce_lmpcpm(self):
             #mpirun -np 1 
-        lmp_scipt = 'mpirun -np 3 {exe_path} -in {lmp_input} '\
+        lmp_scipt = 'mpirun -np 2 {exe_path} -in {lmp_input} '\
                     '-var mx_tcharge {mx_tcharge} -var kappa {kappa} '\
                     '-var width_H {width_H} -var Aii_H {Aii_H} '\
                     '-var width_O {width_O} -var Aii_O {Aii_O} '\
@@ -134,5 +134,6 @@ class PdfoFit:
         # print("x is {}".format(x))
         # print("total_avg: {} ; x is {}".format(avg_sum, self.x), file=open(self.result_file, "a"))
         print("total_avg: {} ; x is {}".format(avg_sum, self.x), flush=True)
+        pool.close()
         return avg_sum
         
