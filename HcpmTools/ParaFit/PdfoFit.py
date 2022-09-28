@@ -15,7 +15,8 @@ class PdfoFit:
         exe_path = '/raid6/homes/linx6/install_software/lammps_27May2021/build/lmp_mpi',
         lmp_input = '/raid6/homes/linx6/project/self_project/mxene_related/cpm_dft_mxene/lammps_input',
         result_file = None, 
-        cases = None
+        cases = None,
+        print = True
     ):
         """_summary_
 
@@ -27,6 +28,7 @@ class PdfoFit:
         self.lmp_input = lmp_input
         self.result_file = result_file
         self.cases = cases
+        self.print = print
         
         
         
@@ -89,7 +91,8 @@ class PdfoFit:
         dft_icharge = u_top.atoms.charges
         li_tcharge = np.sum(dft_icharge[li_idx])
         self.mx_tcharge = -li_tcharge 
-        # print('x is {}'.format(self.x), file=open(self.result_file, "a"))
+        if self.print:
+            print('x is {}'.format(self.x), file=open(self.result_file, "a"), flush=True)
         # print('mx_tcharge is {}'.format(mx_tcharge))
         with job:
             self.produce_lmpcpm()
@@ -102,7 +105,8 @@ class PdfoFit:
         dft_mx_icharge = np.delete(dft_icharge, li_idx, axis = 0)
         ## want to minimize the total sum of squares
         total_sum_sdiff = np.sum((lmp_mx_icharge - dft_mx_icharge)**2)
-        # print('total_sum_sdiff is {}'.format(total_sum_sdiff), file=open(self.result_file, "a"))
+        if self.print:
+            print('total_sum_sdiff is {}'.format(total_sum_sdiff), file=open(self.result_file, "a"),flush=True)
         return total_sum_sdiff      
         
     
@@ -132,8 +136,8 @@ class PdfoFit:
         # outputs = pool.map(single_sum_sqaure, self.cases)
         avg_sum = np.sum(outputs)/len(self.cases)
         # print("x is {}".format(x))
-        # print("total_avg: {} ; x is {}".format(avg_sum, self.x), file=open(self.result_file, "a"))
-        print("total_avg: {} ; x is {}".format(avg_sum, self.x), flush=True)
+        print("total_avg: {} ; x is {}".format(avg_sum, self.x), file=open(self.result_file, "a"),flush=True)
+        # print("total_avg: {} ; x is {}".format(avg_sum, self.x), flush=True)
         pool.close()
         return avg_sum
         
