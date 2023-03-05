@@ -70,3 +70,29 @@ def replicate(structure_sub):
     # structure.box[2] = structure_sub.box[2]*3
     return structure
 
+
+def symmetric(structure, distance, plane=2):
+    """
+    make center-symmetric structure
+    Parameters
+    --------
+    structure: parmed.structure
+    plane: int
+        0: yz plane
+        1: xz plane
+        2: xy plane
+    distance: float
+        sign like +,- means direction; the distance to plane
+    edge: float
+        within the edge, the atoms for sysmetry are not considered
+    """
+    structure_copy = structure.__copy__()
+    if plane == 2:
+        for atom in structure_copy.atoms:
+            distance_to_middle_line = distance - atom.xz
+            atom.xz += 2 * distance_to_middle_line
+    if plane == 1:
+        for atom in structure_copy.atoms:
+            distance_to_middle_line = distance - atom.xy
+            atom.xy += 2 * distance_to_middle_line
+    return structure_copy

@@ -16,32 +16,44 @@ class PdfoFit:
         lmp_input = '/raid6/homes/linx6/project/self_project/mxene_related/cpm_dft_mxene/lammps_input',
         result_file = None, 
         cases = None,
-        print = True
+        print = True,
+        lmp_compile_version = 'gcc'
     ):
         """_summary_
 
         Args:
             lmp_input (str, optional): _description_. Defaults to '/raid6/homes/linx6/project/self_project/mxene_related/cpm_dft_mxene/lammps_input'.
             cases (_type_, optional): _description_. Defaults to None. if provided, it can calculate the sum_square per case. 
+            lmp_compile_version (str): Default to 'gcc', how lammps is compiled, using gcc or intel.
         """
         self.exe_path = exe_path
         self.lmp_input = lmp_input
         self.result_file = result_file
         self.cases = cases
         self.print = print
-        
+        self.lmp_compile_version = lmp_compile_version
         
         
     def produce_lmpcpm(self):
             #mpirun -np 1 
-        lmp_scipt = 'mpirun -np 2 {exe_path} -in {lmp_input} '\
-                    '-var mx_tcharge {mx_tcharge} -var kappa {kappa} '\
-                    '-var width_H {width_H} -var Aii_H {Aii_H} '\
-                    '-var width_O {width_O} -var Aii_O {Aii_O} '\
-                    '-var width_Tio {width_Tio} -var Aii_Tio {Aii_Tio} '\
-                    '-var width_C {width_C} -var Aii_C {Aii_C} '\
-                    '-var width_Tii {width_Tii} -var Aii_Tii {Aii_Tii} '\
-                    '-sf intel -pk intel 0 omp 2'
+        if self.lmp_compile_version == 'gcc':
+            lmp_scipt = 'mpirun -np 3 {exe_path} -in {lmp_input} '\
+                        '-var mx_tcharge {mx_tcharge} -var kappa {kappa} '\
+                        '-var width_H {width_H} -var Aii_H {Aii_H} '\
+                        '-var width_O {width_O} -var Aii_O {Aii_O} '\
+                        '-var width_Tio {width_Tio} -var Aii_Tio {Aii_Tio} '\
+                        '-var width_C {width_C} -var Aii_C {Aii_C} '\
+                        '-var width_Tii {width_Tii} -var Aii_Tii {Aii_Tii}'
+                        
+        elif self.lmp_compile_version == 'intel':
+            lmp_scipt = 'mpirun -np 2 {exe_path} -in {lmp_input} '\
+                        '-var mx_tcharge {mx_tcharge} -var kappa {kappa} '\
+                        '-var width_H {width_H} -var Aii_H {Aii_H} '\
+                        '-var width_O {width_O} -var Aii_O {Aii_O} '\
+                        '-var width_Tio {width_Tio} -var Aii_Tio {Aii_Tio} '\
+                        '-var width_C {width_C} -var Aii_C {Aii_C} '\
+                        '-var width_Tii {width_Tii} -var Aii_Tii {Aii_Tii} '\
+                        '-sf intel -pk intel 0 omp 2'
                     
         subprocess.run(lmp_scipt.format(
                                 exe_path = self.exe_path,
