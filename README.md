@@ -15,7 +15,7 @@ pip install -e .
 
 **Calculation of Diffusivity**: Determines the diffusivity of materials, a crucial aspect in assessing their performance and behavior in different environments.
 
-**Perform Parameter Fitting for HCPM Algorithm**: Employs parameter fitting techniques tailored for the Heteroatomic Constant Potential Method (HCPM), ensuring models are optimally adjusted for precise predictions and analyses.
+**Perform Parameter Fitting for HCPM Algorithm**: Employs parameter fitting techniques tailored for the Heteroatomic Constant Potential Method (HCPM), ensuring models are optimally adjusted for precise predictions and analyses for diverse heteroatomic electrodes
 
 ## Please Cite
 
