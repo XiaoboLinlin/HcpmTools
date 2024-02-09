@@ -123,7 +123,7 @@ class integralCapa:
         """convert e/amu to C/g
 
         Args:
-            charge (float): the value of elementary charge
+            charge (float): total charge (e)
             atom_mass (float): the mass for one atom, unit is amu
             n_atom (int): the number of atoms
 
